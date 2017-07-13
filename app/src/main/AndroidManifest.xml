@@ -19,8 +19,11 @@
 
         <activity android:name=".MainActivity">
         </activity>
-        <activity android:name=".ViewsPolymorph">
+        <activity android:name=".ViewsPolymorph">4
         </activity>
+        <activity android:name=".TimerClass"/>
+        <activity android:name=".Timer"/>
+        <activity android:name=".TimerActivity"/>
     </application>
 
 </manifest>

@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TabHost
 import android.widget.TextView
+import java.util.*
 
 
 class TabActivity : android.app.TabActivity() {
@@ -38,6 +39,10 @@ class TabActivity : android.app.TabActivity() {
 
         intent = Intent().setClass(this, ViewsPolymorph::class.java)
         tabSpec = tabHost!!.newTabSpec("polymorph").setIndicator("View polymorph").setContent(intent)
+        tabHost!!.addTab(tabSpec)
+
+        intent = Intent().setClass(this, TimerActivity::class.java)
+        tabSpec = tabHost!!.newTabSpec("timer").setIndicator("Timer").setContent(intent)
         tabHost!!.addTab(tabSpec)
 
         tabHost!!.currentTab = 1
