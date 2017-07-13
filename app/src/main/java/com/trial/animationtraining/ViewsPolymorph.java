@@ -1,6 +1,9 @@
 package com.trial.animationtraining;
 
+import android.animation.ArgbEvaluator;
+import android.animation.ValueAnimator;
 import android.app.Activity;
+import android.graphics.drawable.TransitionDrawable;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
@@ -24,6 +27,8 @@ public class ViewsPolymorph extends Activity implements Animation.AnimationListe
     Animation moveButtonDown;
     Animation topViewTransformation;
     Animation middleViewTransformation;
+
+    ValueAnimator colorAnimation;
 
     Button activationButton;
 
@@ -52,6 +57,10 @@ public class ViewsPolymorph extends Activity implements Animation.AnimationListe
         middleViewTransformation.setAnimationListener(this);
         bottomViewTransformation.setAnimationListener(this);
 
+        final int blueColor = ContextCompat.getColor(this, R.color.blue);
+        final int redColor = ContextCompat.getColor(this, R.color.red);
+        final int greenColor = ContextCompat.getColor(this, R.color.green);
+
         activationButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -60,7 +69,9 @@ public class ViewsPolymorph extends Activity implements Animation.AnimationListe
                 bottomView.startAnimation(topViewTransformation);
                 middleView.startAnimation(middleViewTransformation);
                 topView.startAnimation(bottomViewTransformation);
-
+                colorTransition(redColor, greenColor, bottomView);
+                colorTransition(greenColor, blueColor, middleView);
+                colorTransition(blueColor, redColor, topView);
             }
         });
     }
@@ -68,9 +79,7 @@ public class ViewsPolymorph extends Activity implements Animation.AnimationListe
     @Override
     public void onAnimationEnd(Animation animation) {
         Log.d("TAG", "Animation Stopped!");
-        topView.setBackgroundColor(ContextCompat.getColor(this, R.color.red));
-        middleView.setBackgroundColor(ContextCompat.getColor(this, R.color.blue));
-        bottomView.setBackgroundColor(ContextCompat.getColor(this, R.color.green));
+
 
     }
 
@@ -82,5 +91,18 @@ public class ViewsPolymorph extends Activity implements Animation.AnimationListe
     @Override
     public void onAnimationStart(Animation animation) {
         Log.d("TAG", "Animation Started!");
+    }
+
+    private void colorTransition(int colorFrom, int colorTo, final View view) {
+        colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
+        colorAnimation.setDuration(2000); // milliseconds
+        colorAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+
+            @Override
+            public void onAnimationUpdate(ValueAnimator animator) {
+                view.setBackgroundColor((int) animator.getAnimatedValue());
+            }
+        });
+        colorAnimation.start();
     }
 }
