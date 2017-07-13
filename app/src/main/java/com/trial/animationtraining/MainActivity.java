@@ -43,11 +43,9 @@ public class MainActivity extends Activity implements Animation.AnimationListene
             public void onClick(View v) {
                 if (!i) {
                     buttonTwo.startAnimation(zoomIn);
-                    buttonTwo.setText("Reduce me");
                     i = true;
                 } else {
                     buttonTwo.startAnimation(zoomOut);
-                    buttonTwo.setText("Grow me");
                     i = false;
                 }
             }
@@ -57,16 +55,19 @@ public class MainActivity extends Activity implements Animation.AnimationListene
     @Override
     public void onAnimationEnd(Animation animation) {
             Log.d("TAG", "Animation Stopped!");
-
+        if (animation == zoomOut) {
+            buttonTwo.setText("Grow me");
+        }
+        if (animation == zoomIn) {
+            buttonTwo.setText("Reduce me");
+        }
     }
 
     @Override
     public void onAnimationRepeat(Animation animation) {
-        Log.d("TAG", "Animation Repeating!");
     }
 
     @Override
     public void onAnimationStart(Animation animation) {
-        Log.d("TAG", "Animation Started!");
     }
 }
